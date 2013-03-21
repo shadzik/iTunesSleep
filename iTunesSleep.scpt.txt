@@ -1,0 +1,45 @@
+property sleepTime : 30
+
+global pauseTime
+
+on getTime()
+	repeat
+		set res to display dialog "Podaj czas" default answer sleepTime
+		try
+			set sleepTime to text returned of res as number
+			exit repeat
+		on error errStr number errNum
+			display dialog "Błąd! Podaj czas w minutach"
+		end try
+	end repeat
+	set pauseTime to (current date) + (sleepTime * 60)
+end getTime
+
+on pauseMusic()
+	tell application "Finder"
+		if process "iTunes" exists then
+			tell application "iTunes"
+				if player state is playing then
+					pause
+				end if
+			end tell
+		end if
+	end tell
+end pauseMusic
+
+on idle
+	set curTime to current date
+	if (curTime ≥ pauseTime) then
+		my pauseMusic()
+		quit me
+	end if
+end idle
+
+on run
+	try
+		getTime()
+	on error number -128
+		quit me
+	end try
+end run
+
