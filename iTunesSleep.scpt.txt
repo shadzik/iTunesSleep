@@ -1,3 +1,9 @@
+# iTunes Sleep
+# author: Bartosz Świątek (shadzik@gmail.com)
+# license: GPLv2+
+# (c) 2012
+#
+
 property sleepTime : 30
 
 global pauseTime
